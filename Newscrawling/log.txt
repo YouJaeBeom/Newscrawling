@@ -1,0 +1,76 @@
+2020-11-04 00:11:18 [scrapy.core.engine] ERROR: Scraper close failure
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'NewsbotSpider' object has no attribute 'start'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\twisted\internet\defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "D:\ex code\크롤링\Newscrawling\Newscrawling\pipelines.py", line 41, in close_spider
+    self.exporter.finish_exporting()
+AttributeError: 'JsonLinesPipeline' object has no attribute 'exporter'
+2020-11-04 00:11:18 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x0000025B15152CF8>>
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'NewsbotSpider' object has no attribute 'start'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\twisted\internet\defer.py", line 151, in maybeDeferred
+    result = f(*args, **kw)
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\pydispatch\robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\extensions\corestats.py", line 28, in spider_closed
+    elapsed_time = finish_time - self.stats.get_value('start_time')
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2020-11-04 00:11:18 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-11-04 00:11:18 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'NewsbotSpider' object has no attribute 'start'
+2020-11-04 00:14:29 [scrapy.core.engine] ERROR: Scraper close failure
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'NewsbotSpider' object has no attribute 'start'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\twisted\internet\defer.py", line 654, in _runCallbacks
+    current.result = callback(current.result, *args, **kw)
+  File "D:\ex code\크롤링\Newscrawling\Newscrawling\pipelines.py", line 41, in close_spider
+    self.exporter.finish_exporting()
+AttributeError: 'JsonLinesPipeline' object has no attribute 'exporter'
+2020-11-04 00:14:29 [scrapy.utils.signal] ERROR: Error caught on signal handler: <bound method CoreStats.spider_closed of <scrapy.extensions.corestats.CoreStats object at 0x00000165B3952E48>>
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'NewsbotSpider' object has no attribute 'start'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\twisted\internet\defer.py", line 151, in maybeDeferred
+    result = f(*args, **kw)
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\pydispatch\robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\extensions\corestats.py", line 28, in spider_closed
+    elapsed_time = finish_time - self.stats.get_value('start_time')
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2020-11-04 00:14:29 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-11-04 00:14:29 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
+    yield self.engine.open_spider(self.spider, start_requests)
+AttributeError: 'NewsbotSpider' object has no attribute 'start'
