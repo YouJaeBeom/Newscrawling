@@ -32,7 +32,7 @@ class NewsbotSpider(scrapy.Spider):
     ## start
     def start_requests(self):
         s_date=datetime(2020,11,4)
-        for day in range(300):
+        for day in range(270):
             ss=day*-1
             self.start_date = s_date + relativedelta(days=ss)
             self.start_date=self.start_date.strftime("%Y.%m.%d")
