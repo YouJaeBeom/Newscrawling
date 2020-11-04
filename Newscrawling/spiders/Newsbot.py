@@ -30,22 +30,67 @@ class NewsbotSpider(scrapy.Spider):
 
     ## start
     def start_requests(self):
-        self.url='https://search.naver.com/search.naver?where=news&sm=tab_jum&query={}'.format("코로나")
-        yield scrapy.Request(self.url, callback=self.parse_url,dont_filter=True)
+        self.url='https://search.naver.com/search.naver'
+        start_url=self.url+'?where=news&sm=tab_jum&query={}'.format("코로나")
+        print("start_url",start_url)
+        yield scrapy.Request(start_url, callback=self.parse_url,dont_filter=True)
 
     ## URL scrap
     def parse_url(self,response):
+        ## news list url search
         crawling_url_list = response.xpath(r'//*[@class="list_news"]/li/div[1]/div/div[1]/div/a[2]/@href').extract()
-        # str_response = response.xpath(r'//*[@id="sp_nws1"]/div[1]/div/div[1]/div/a[2]/@href').extract()
         for url in crawling_url_list:
-            print((url))
+            ## news parse
             request = scrapy.Request(url,dont_filter=True, callback=self.parse_news_page)
             yield request
 
+        ## next Page
+        next_page_url=response.xpath('//*[@id="main_pack"]/div[2]/div/a[2]/@href').extract()[0]
+        next_page_url=self.url+str(next_page_url)
+        print("next_page_url",next_page_url)
+        yield scrapy.Request(next_page_url,dont_filter=True,callback=self.parse_url)
+
     ## News Scrap
     def parse_news_page(self,response):
-        print("start???")
-        print(response.xpath(r'//*[@id="articleTitle"]/text()').extract())
+        ## News item
+        newsitem=NewscrawlingItem()
+
+        # News text pre-processing
+        response = response.replace(body=response.body.replace(b'<br>', b''))
+        body = response.xpath(r'(//*[ @ id = "articleBodyContents"])').extract()[0]
+
+        ## 특정 태그 삭제
+        body = re.sub(r'<strong.*?>.*?</strong>', '', body, 0, re.I|re.S)
+        body = re.sub(r'<span.*?>.*?</span>', '', body, 0, re.I|re.S)
+        body = re.sub(r'<ul>.*?</ul>', '', body, 0, re.I|re.S)
+
+        ## 의미없는 값제거
+        body = body.replace("// flash 오류를 우회하기 위한 함수 추가","")
+        body = body.replace("function _flash_removeCallback() {}", "")
+        
+        ## 태그 삭제
+        body = re.sub(r'<.*?>','',body)
+        
+        ## 문자 공백제거
+        body = body.strip()
+
+        ## News date
+        newsitem['date'] = response.xpath(r'//*[@id="main_content"]/div[1]/div[3]/div/span/text()').extract()[0]
+
+        ## News title
+        newsitem['News_title'] = response.xpath(r'//*[@id="articleTitle"]/text()').extract()[0]
+
+        ## News text
+        newsitem['News_text'] = body
+
+
+        ## item export
+        yield newsitem
+
+
+
+
+
 
 
 

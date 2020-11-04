@@ -1,4 +1,4 @@
-2020-11-04 00:11:18 [scrapy.core.engine] ERROR: Scraper close failure
+020-11-04 00:11:18 [scrapy.core.engine] ERROR: Scraper close failure
 Traceback (most recent call last):
   File "d:\anaconda3\envs\cralwer\lib\site-packages\scrapy\crawler.py", line 88, in crawl
     yield self.engine.open_spider(self.spider, start_requests)

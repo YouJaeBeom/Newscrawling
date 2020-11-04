@@ -4,6 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+import csv
 import logging
 import time
 from scrapy.utils.project import get_project_settings
@@ -14,36 +15,14 @@ logger = logging.getLogger(__name__)
 
 
 class NewscrawlingPipeline(object):
-    def process_item(self, item, spider):
-        return item
-
-
-class JsonLinesPipeline(object):
     def __init__(self):
-        self.files = {}
-
-    def open_spider(self, spider):
-        # print(spider.name, 'open spider')
-        self.name = spider.name
-        # print(self.name)
-        self.time = spider.start
-        self.saveUserPath = settings['SAVE_USER_PATH']
-        mkdirs(self.saveUserPath)
-
-        file = open(f'{self.saveUserPath}/{self.name}.json', 'wb')
-        self.files[spider] = file
-
-        self.exporter = JsonLinesItemExporter(file, encoding='utf-8', ensure_ascii=False)
-        self.exporter.start_exporting()
-
-    def close_spider(self, spider):
-        # print(spider.name, self.name)
-        self.exporter.finish_exporting()
-        file = self.files.pop(spider)
-        file.close()
-        logger.warning(f'{self.name} finish {time.time() - self.time}')
+        self.myCsv = csv.writer(open('news.csv', 'w',encoding='utf-8-sig',newline=''))
+        self.myCsv.writerow(['date', 'News_title','News_text'])
 
     def process_item(self, item, spider):
-        # if item['usernameTweet'] == self.name:
-        self.exporter.export_item(item)
+        self.myCsv.writerow([item['date'], item['News_title'],item['News_text']])
         return item
+
+
+
+

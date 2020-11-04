@@ -15,6 +15,7 @@ SPIDER_MODULES = ['Newscrawling.spiders']
 NEWSPIDER_MODULE = 'Newscrawling.spiders'
 
 
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Newscrawling (+http://www.yourdomain.com)'
 
@@ -64,9 +65,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'Newscrawling.pipelines.NewscrawlingPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'Newscrawling.pipelines.NewscrawlingPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
