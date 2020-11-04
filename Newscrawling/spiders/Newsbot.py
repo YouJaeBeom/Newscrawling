@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 import time
 
 
-
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 class NewsbotSpider(scrapy.Spider):
 
@@ -30,11 +31,21 @@ class NewsbotSpider(scrapy.Spider):
 
     ## start
     def start_requests(self):
-        self.url='https://search.naver.com/search.naver'
-        start_url=self.url+'?where=news&sm=tab_jum&query={}'.format("코로나")+"&sm=tab_opt&sort=0&photo=0&field=0&reporter_article=&pd=3&ds=2019.11.01&de=2020.11.04&docid=&nso=so%3Ar%2Cp%3Afrom20191101to20201104%2Ca%3Aall&mynews=0&refresh_start=0&related=0"
+        s_date=datetime(2020,11,4)
+        for day in range(300):
+            ss=day*-1
+            self.start_date = s_date + relativedelta(days=ss)
+            self.start_date=self.start_date.strftime("%Y.%m.%d")
+            print(self.start_date,"~",self.start_date)
+            self.url = 'https://search.naver.com/search.naver'
+            start_url = self.url + '?where=news&sm=tab_jum&query={}'.format("코로나") + \
+                        "&sm=tab_opt&sort=0&photo=0&field=0&reporter_article=&pd=3&ds={}".format(
+                            self.start_date) + "&de={}".format(
+                self.start_date) + "&docid=&nso=so%3Ar%2Cp%3Afrom20191101to20201104%2Ca%3Aall&mynews=0&refresh_start=0&related=0"
 
-        print("start_url",start_url)
-        yield scrapy.Request(start_url, callback=self.parse_url,dont_filter=True)
+            print("start_url", start_url)
+            yield scrapy.Request(start_url, callback=self.parse_url, dont_filter=True)
+
 
     ## URL scrap
     def parse_url(self,response):
@@ -78,14 +89,13 @@ class NewsbotSpider(scrapy.Spider):
         body = body.strip()
 
         ## News date
-        newsitem['date'] = response.xpath(r'//*[@id="main_content"]/div[1]/div[3]/div/span/text()').extract()[0]
+        newsitem['date'] = response.xpath(r'//*[@id="main_content"]/div[1]/div[3]/div/span[@class="t11"]/text()').extract()[0]
 
         ## News title
         newsitem['News_title'] = response.xpath(r'//*[@id="articleTitle"]/text()').extract()[0]
 
         ## News text
         newsitem['News_text'] = body
-
 
         ## item export
         yield newsitem
