@@ -21,9 +21,10 @@ Newscrawling은 코로나 관련 뉴스를 수집하는 프레임워크입니다
 
 <code>
 def __init__(self):
+        
         self.myCsv = csv.writer(open('news.csv', 'w',encoding='utf-8-sig',newline=''))
-        self.myCsv.writerow(['date', 'News_title','News_text'])
-</code>
+        
+        self.myCsv.writerow(['date', 'News_title','News_text'])</code>
 
 중  오픈 파일명을 바꾸시면 됩니다.
 
